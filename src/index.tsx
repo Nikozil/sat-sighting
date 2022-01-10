@@ -3,10 +3,24 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { createGlobalStyle } from 'styled-components';
+import { Provider } from 'react-redux';
+import store from './Redux/store';
+
+const Global = createGlobalStyle`
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+`;
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <Global />
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
