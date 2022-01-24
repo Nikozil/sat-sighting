@@ -50,6 +50,9 @@ const Button = styled.button<{ isSelected: boolean }>`
   cursor: pointer;
   box-shadow: ${(props) =>
     props.isSelected ? '1px 1px 5px 5px #203C5C' : null};
+  &:hover {
+    opacity: 0.8;
+  }
   @media (max-width: 768px) {
     font-size: 1.2em;
   }

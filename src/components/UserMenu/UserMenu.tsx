@@ -45,6 +45,11 @@ const Button = styled.button`
   border-radius: 5px;
   cursor: pointer;
   // box-shadow: '1px 1px 5px 5px #203C5C';
+
+  &:hover {
+    opacity: 0.8;
+  }
+
   @media (max-width: 768px) {
     font-size: 1.2em;
   }
