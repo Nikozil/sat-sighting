@@ -2,19 +2,21 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { setSightingParametersThunk } from '../../Redux/modules/userSlice';
-import { AppStateType } from '../../Redux/store';
+import {
+  getCoordinates,
+  getSightingParameters,
+} from '../../Redux/selectors/userSelectors';
 
 const SightingParameters = () => {
   const dispatch = useDispatch();
-  const sightingParameters = useSelector(
-    (state: AppStateType) => state.user.userParameters.sightingParameters
-  );
-  const userCoordinates = useSelector(
-    (state: AppStateType) => state.user.user.coordinates
-  );
+
+  const sightingParameters = useSelector(getSightingParameters);
+  const userCoordinates = useSelector(getCoordinates);
+
   useEffect(() => {
     dispatch(setSightingParametersThunk());
   }, [userCoordinates, dispatch]);
+
   return (
     <Wrapper>
       {Object.entries(sightingParameters).map(([key, parameter]) => (

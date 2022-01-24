@@ -2,16 +2,15 @@ import React, { MouseEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { setSelectedSatelliteThunk } from '../../Redux/modules/userSlice';
-import { AppStateType } from '../../Redux/store';
+import { getSatellites } from '../../Redux/selectors/satellitesSelectors';
+import { getSelectedSatelliteName } from '../../Redux/selectors/userSelectors';
 
 const SatellitesMenu = () => {
   const dispatch = useDispatch();
-  const satellites = useSelector(
-    (state: AppStateType) => state.satellites.satellites
-  );
-  const userSelected = useSelector(
-    (state: AppStateType) => state.user.userParameters.selectedSatellite.name
-  );
+
+  const satellites = useSelector(getSatellites);
+  const userSelectedName = useSelector(getSelectedSatelliteName);
+
   const clickHandler = (e: MouseEvent) => {
     const target = e.target as HTMLButtonElement;
     dispatch(setSelectedSatelliteThunk(target.innerHTML));
@@ -24,7 +23,7 @@ const SatellitesMenu = () => {
           key={satellite.name}
           theme={{ background: `${satellite.areaFillColor}` }}
           onClick={clickHandler}
-          isSelected={satellite.name === userSelected}>
+          isSelected={satellite.name === userSelectedName}>
           {satellite.name}
         </Button>
       ))}
