@@ -15,6 +15,7 @@ export const initialState = {
       magneticDeclination: { name: 'Магнитное склонение', data: 0 },
       magneticAzimuth: { name: 'Магнитный азимут', data: 0 },
     },
+    isFetching: false,
   },
 };
 
@@ -50,6 +51,9 @@ const userSlice = createSlice({
     setSightingImpossibly: (state, action: PayloadAction<boolean>) => {
       state.userParameters.sightingImpossibly = action.payload;
     },
+    setIsFetching: (state, action: PayloadAction<boolean>) => {
+      state.userParameters.isFetching = action.payload;
+    },
   },
 });
 
@@ -61,6 +65,7 @@ export const {
   setDeclination,
   setMagneticAzimuth,
   setSightingImpossibly,
+  setIsFetching,
 } = userSlice.actions;
 
 export default userSlice;
@@ -148,11 +153,16 @@ export const setSightingParametersThunk =
     )[0].isInPolygone;
 
     if (isInPolygone) {
+      dispatch(setIsFetching(true));
+
       dispatch(setSightingImpossibly(false));
+
       await dispatch(setDeclinationThunk());
       await dispatch(setMagneticAzimuthThunk());
       dispatch(setElevationAngleThunk());
       dispatch(setAzimuthThunk());
+
+      dispatch(setIsFetching(false));
     } else {
       dispatch(setSightingImpossibly(true));
     }

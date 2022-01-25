@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import Spinner from '../../assets/Spinner/Spinner';
 import { setSightingParametersThunk } from '../../Redux/modules/userSlice';
 import {
   getCoordinates,
+  getIsFetching,
   getSightingImpossibly,
   getSightingParameters,
 } from '../../Redux/selectors/userSelectors';
@@ -14,6 +16,7 @@ const SightingParameters = () => {
   const sightingParameters = useSelector(getSightingParameters);
   const userCoordinates = useSelector(getCoordinates);
   const sightingImpossibly = useSelector(getSightingImpossibly);
+  const isFetching = useSelector(getIsFetching);
 
   useEffect(() => {
     dispatch(setSightingParametersThunk());
@@ -27,7 +30,7 @@ const SightingParameters = () => {
         Object.entries(sightingParameters).map(([key, parameter]) => (
           <Parameter key={parameter.name}>
             <div>{parameter.name}</div>
-            <div>{`${parameter.data} °`}</div>
+            <div>{isFetching ? <Spinner /> : `${parameter.data} °`}</div>
           </Parameter>
         ))
       )}

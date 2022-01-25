@@ -14,3 +14,6 @@ export const getSelectedSatelliteName = (state: AppStateType) =>
 
 export const getSightingImpossibly = (state: AppStateType) =>
   state.user.userParameters.sightingImpossibly;
+
+export const getIsFetching = (state: AppStateType) =>
+  state.user.userParameters.isFetching;
