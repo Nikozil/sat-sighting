@@ -8,6 +8,7 @@ export const initialState = {
   user: { coordinates: [56.185138378217, 36.97672197631281] } as User,
   userParameters: {
     selectedSatellite: { name: 'AMER', coordinates: [0, -98] },
+    sightingImpossibly: false,
     sightingParameters: {
       elevationAngle: { name: 'Угол места', data: 0 },
       trueAzimuth: { name: 'Истинный азимут', data: 0 },
@@ -46,6 +47,9 @@ const userSlice = createSlice({
       state.userParameters.sightingParameters.magneticAzimuth.data =
         action.payload;
     },
+    setSightingImpossibly: (state, action: PayloadAction<boolean>) => {
+      state.userParameters.sightingImpossibly = action.payload;
+    },
   },
 });
 
@@ -56,6 +60,7 @@ export const {
   setAzimuth,
   setDeclination,
   setMagneticAzimuth,
+  setSightingImpossibly,
 } = userSlice.actions;
 
 export default userSlice;
@@ -65,6 +70,7 @@ export const setUserCoordinatesThunk =
   (dispatch, getState) => {
     dispatch(setUserCoordinates(coordinates));
   };
+
 export const setSelectedSatelliteThunk =
   (name: string): AppThunk =>
   (dispatch, getState) => {
@@ -72,7 +78,9 @@ export const setSelectedSatelliteThunk =
     const satellite = satellites.filter(
       (satellite) => satellite.name === name
     )[0];
+
     dispatch(setSelectedSatellite(satellite));
+
     dispatch(setSightingParametersThunk());
   };
 
@@ -86,8 +94,10 @@ export const setElevationAngleThunk = (): AppThunk => (dispatch, getState) => {
     userCoordinates[1],
     satelliteCoordinates[1]
   );
+
   dispatch(setElevationAngle(elevationAngle));
 };
+
 export const setAzimuthThunk = (): AppThunk => (dispatch, getState) => {
   const satelliteCoordinates =
     getState().user.userParameters.selectedSatellite.coordinates;
@@ -98,8 +108,10 @@ export const setAzimuthThunk = (): AppThunk => (dispatch, getState) => {
     userCoordinates[1],
     satelliteCoordinates[1]
   );
+
   dispatch(setAzimuth(azimuth));
 };
+
 export const setDeclinationThunk =
   (): AppThunk => async (dispatch, getState) => {
     const userCoordinates = getState().user.user.coordinates;
@@ -109,6 +121,7 @@ export const setDeclinationThunk =
 
     dispatch(setDeclination(declination));
   };
+
 export const setMagneticAzimuthThunk =
   (): AppThunk => async (dispatch, getState) => {
     const userCoordinates = getState().user.user.coordinates;
@@ -117,19 +130,32 @@ export const setMagneticAzimuthThunk =
     const declination =
       getState().user.userParameters.sightingParameters.magneticDeclination
         .data;
+
     const longitude = userCoordinates[1];
     const magneticAzimuth =
       longitude > 0 ? azimuth - declination : azimuth + declination;
     const fixedMagneticAzimuth = +magneticAzimuth.toFixed(1);
+
     dispatch(setMagneticAzimuth(fixedMagneticAzimuth));
   };
 
 export const setSightingParametersThunk =
-  (): AppThunk => (dispatch, getState) => {
-    dispatch(setElevationAngleThunk());
-    dispatch(setAzimuthThunk());
-    dispatch(setDeclinationThunk());
-    dispatch(setMagneticAzimuthThunk());
+  (): AppThunk => async (dispatch, getState) => {
+    const selected = getState().user.userParameters.selectedSatellite;
+    const satellites = getState().satellites.satellites;
+    const isInPolygone = satellites.filter(
+      (satellite) => satellite.name === selected.name
+    )[0].isInPolygone;
+
+    if (isInPolygone) {
+      dispatch(setSightingImpossibly(false));
+      await dispatch(setDeclinationThunk());
+      await dispatch(setMagneticAzimuthThunk());
+      dispatch(setElevationAngleThunk());
+      dispatch(setAzimuthThunk());
+    } else {
+      dispatch(setSightingImpossibly(true));
+    }
   };
 export interface User {
   coordinates: Coordinates;

@@ -8,9 +8,10 @@ const SatelliteMapComponent: React.FC<PropTypes> = ({ satellite, onClick }) => {
   const { name, coordinates, area, areaFillColor, areaStrokeColor } = satellite;
 
   return (
-    <Fragment key={name}>
+    <Fragment>
       <SatellitePlacemark name={name} coordinates={coordinates} />
       <SatellitePolygon
+        name={name}
         area={area}
         areaFillColor={areaFillColor}
         areaStrokeColor={areaStrokeColor}

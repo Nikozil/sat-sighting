@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AppThunk } from '../store';
 
 export const initialState = {
   satellites: [
@@ -18,6 +19,7 @@ export const initialState = {
       // areaFillColor: '#3869A0',
       areaFillColor: '#17273A',
       areaStrokeColor: '#26486E',
+      isInPolygone: false,
     },
     {
       name: 'EMEA',
@@ -34,6 +36,7 @@ export const initialState = {
       ],
       areaFillColor: '#1DDE1D',
       areaStrokeColor: '#0C5E0C',
+      isInPolygone: false,
     },
     {
       name: 'MEAS',
@@ -50,6 +53,7 @@ export const initialState = {
       ],
       areaFillColor: '#F03F00',
       areaStrokeColor: '#701E00',
+      isInPolygone: false,
     },
     {
       name: 'APAC',
@@ -66,6 +70,7 @@ export const initialState = {
       ],
       areaFillColor: '#8D00A3',
       areaStrokeColor: '#610070',
+      isInPolygone: false,
     },
   ] as Satellite[],
 };
@@ -75,10 +80,27 @@ export type initialStateType = typeof initialState;
 const satellitesSlice = createSlice({
   name: 'satellites',
   initialState,
-  reducers: {},
+  reducers: {
+    setIsInPolygone: (
+      state,
+      action: PayloadAction<{ name: string; isInPolygone: boolean }>
+    ) => {
+      state.satellites.filter(
+        (satellite) => satellite.name === action.payload.name
+      )[0].isInPolygone = action.payload.isInPolygone;
+    },
+  },
 });
 
+export const { setIsInPolygone } = satellitesSlice.actions;
+
 export default satellitesSlice;
+
+export const setIsInPolygoneThunk =
+  (name: string, isInPolygone: boolean): AppThunk =>
+  (dispatch, getState) => {
+    dispatch(setIsInPolygone({ name, isInPolygone }));
+  };
 
 export interface Satellite {
   name: string;
@@ -86,6 +108,7 @@ export interface Satellite {
   area: Coordinates[];
   areaFillColor: string;
   areaStrokeColor: string;
+  isInPolygone: boolean;
 }
 
 export type Coordinates = number[];

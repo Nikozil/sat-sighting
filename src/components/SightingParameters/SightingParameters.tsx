@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { setSightingParametersThunk } from '../../Redux/modules/userSlice';
 import {
   getCoordinates,
+  getSightingImpossibly,
   getSightingParameters,
 } from '../../Redux/selectors/userSelectors';
 
@@ -12,6 +13,7 @@ const SightingParameters = () => {
 
   const sightingParameters = useSelector(getSightingParameters);
   const userCoordinates = useSelector(getCoordinates);
+  const sightingImpossibly = useSelector(getSightingImpossibly);
 
   useEffect(() => {
     dispatch(setSightingParametersThunk());
@@ -19,12 +21,16 @@ const SightingParameters = () => {
 
   return (
     <Wrapper>
-      {Object.entries(sightingParameters).map(([key, parameter]) => (
-        <Parameter key={parameter.name}>
-          <div>{parameter.name}</div>
-          <div>{`${parameter.data} °`}</div>
-        </Parameter>
-      ))}
+      {sightingImpossibly ? (
+        <Alert>Наведение невозможно</Alert>
+      ) : (
+        Object.entries(sightingParameters).map(([key, parameter]) => (
+          <Parameter key={parameter.name}>
+            <div>{parameter.name}</div>
+            <div>{`${parameter.data} °`}</div>
+          </Parameter>
+        ))
+      )}
     </Wrapper>
   );
 };
@@ -34,6 +40,7 @@ export default SightingParameters;
 const Wrapper = styled.section`
   display: flex;
   margin: 5px 0;
+  height: 100px;
 `;
 const Parameter = styled.div`
   margin: 0 5px;
@@ -44,4 +51,9 @@ const Parameter = styled.div`
   @media (max-width: 768px) {
     font-size: 1em;
   }
+`;
+const Alert = styled.div`
+  color: #242424;
+  font-size: 1.9em;
+  font-weight: 900;
 `;

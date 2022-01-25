@@ -83,6 +83,7 @@ const MapComponent = () => {
 
         {satellites.map((satellite) => (
           <SatelliteMapComponent
+            key={satellite.name}
             satellite={satellite}
             onClick={onClickHandler}
           />
