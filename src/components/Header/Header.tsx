@@ -34,7 +34,7 @@ const Title = styled.h1`
   @media (max-width: 768px) {
     font-size: 1.2em;
   }
-  @media (max-width: 500px) {
+  @media (max-width: 576px) {
     font-size: 1em;
   }
 `;

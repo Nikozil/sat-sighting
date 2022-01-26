@@ -30,7 +30,9 @@ const SightingParameters = () => {
         Object.entries(sightingParameters).map(([key, parameter]) => (
           <Parameter key={parameter.name}>
             <div>{parameter.name}</div>
-            <div>{isFetching ? <Spinner /> : `${parameter.data} °`}</div>
+            <ParameterData>
+              {isFetching ? <Spinner /> : `${parameter.data} °`}
+            </ParameterData>
           </Parameter>
         ))
       )}
@@ -48,15 +50,24 @@ const Wrapper = styled.section`
 const Parameter = styled.div`
   margin: 0 5px;
   color: #242424;
-
+  text-align: center;
   font-size: 1.2em;
   font-weight: 900;
   @media (max-width: 768px) {
     font-size: 1em;
+  }
+  @media (max-width: 576px) {
+    font-size: 0.9em;
   }
 `;
 const Alert = styled.div`
   color: #242424;
   font-size: 1.9em;
   font-weight: 900;
+  @media (max-width: 768px) {
+    font-size: 1.8em;
+  }
+`;
+const ParameterData = styled.div`
+  height: 25px;
 `;

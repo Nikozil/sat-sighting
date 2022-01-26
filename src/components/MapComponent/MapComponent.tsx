@@ -52,7 +52,7 @@ const MapComponent = () => {
         style={{
           minWidth: '320px',
           width: '100vw',
-          height: 'calc(100vh - 270px)',
+          height: 'calc(100vh - 250px)',
         }}
         defaultState={{
           center: [55.751574, 37.573856],

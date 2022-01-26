@@ -24,7 +24,7 @@ function App() {
 export default App;
 
 const Wrapper = styled.section`
-  height: 200px;
+  height: 180px;
   display: flex;
   flex-direction: column;
   align-items: center;
