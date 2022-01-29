@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk } from '../store';
 
 export const initialState = {
+  areasCheckCount: 0,
   satellites: [
     {
       name: 'AMER',
@@ -89,10 +90,13 @@ const satellitesSlice = createSlice({
         (satellite) => satellite.name === action.payload.name
       )[0].isInPolygone = action.payload.isInPolygone;
     },
+    setCount: (state) => {
+      state.areasCheckCount += 1;
+    },
   },
 });
 
-export const { setIsInPolygone } = satellitesSlice.actions;
+export const { setIsInPolygone, setCount } = satellitesSlice.actions;
 
 export default satellitesSlice;
 
@@ -100,6 +104,7 @@ export const setIsInPolygoneThunk =
   (name: string, isInPolygone: boolean): AppThunk =>
   (dispatch, getState) => {
     dispatch(setIsInPolygone({ name, isInPolygone }));
+    dispatch(setCount());
   };
 
 export interface Satellite {

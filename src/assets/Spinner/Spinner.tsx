@@ -1,17 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Spinner = () => {
-  return <Spin></Spin>;
+const Spinner: React.FC<PropTypes> = ({ size }) => {
+  return <Spin theme={{ size }}></Spin>;
 };
 
 export default Spinner;
 
 const Spin = styled.div`
   display: inline-block;
-  width: 25px;
-  height: 25px;
-  border: 3px solid rgba(36, 36, 36, 0.3);
+  width: ${(props) => (props.theme.size ? `${props.theme.size}px` : '25px')};
+  height: ${(props) => (props.theme.size ? `${props.theme.size}px` : '25px')};
+  border: ${(props) =>
+      props.theme.size ? `${props.theme.size / 10}px` : '3px'}
+    solid rgba(36, 36, 36, 0.3);
   border-radius: 50%;
   border-top-color: #242424;
 
@@ -29,3 +31,7 @@ const Spin = styled.div`
     }
   }
 `;
+
+interface PropTypes {
+  size?: number;
+}

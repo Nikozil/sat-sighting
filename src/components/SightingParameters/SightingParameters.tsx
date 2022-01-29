@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Spinner from '../../assets/Spinner/Spinner';
 import { setSightingParametersThunk } from '../../Redux/modules/userSlice';
+import { getCashedAreasCheckCount } from '../../Redux/selectors/satellitesSelectors';
 import {
   getCoordinates,
+  getInitialization,
   getIsFetching,
   getSightingImpossibly,
   getSightingParameters,
@@ -13,28 +15,35 @@ import {
 const SightingParameters = () => {
   const dispatch = useDispatch();
 
+  const coordinates = useSelector(getCoordinates);
   const sightingParameters = useSelector(getSightingParameters);
-  const userCoordinates = useSelector(getCoordinates);
   const sightingImpossibly = useSelector(getSightingImpossibly);
   const isFetching = useSelector(getIsFetching);
+  const initialization = useSelector(getInitialization);
+
+  const areasCheckCountChanged = useSelector(getCashedAreasCheckCount);
 
   useEffect(() => {
     dispatch(setSightingParametersThunk());
-  }, [userCoordinates, dispatch]);
+  }, [areasCheckCountChanged, coordinates, dispatch]);
 
   return (
     <Wrapper>
-      {sightingImpossibly ? (
-        <Alert>Наведение невозможно</Alert>
+      {initialization ? (
+        sightingImpossibly ? (
+          <Alert>Наведение невозможно</Alert>
+        ) : (
+          Object.entries(sightingParameters).map(([key, parameter]) => (
+            <Parameter key={parameter.name}>
+              <div>{parameter.name}</div>
+              <ParameterData>
+                {isFetching ? <Spinner /> : `${parameter.data} °`}
+              </ParameterData>
+            </Parameter>
+          ))
+        )
       ) : (
-        Object.entries(sightingParameters).map(([key, parameter]) => (
-          <Parameter key={parameter.name}>
-            <div>{parameter.name}</div>
-            <ParameterData>
-              {isFetching ? <Spinner /> : `${parameter.data} °`}
-            </ParameterData>
-          </Parameter>
-        ))
+        <Spinner size={50} />
       )}
     </Wrapper>
   );
@@ -46,6 +55,9 @@ const Wrapper = styled.section`
   display: flex;
   margin: 5px 0;
   height: 100px;
+  @media (max-width: 768px) {
+    height: 60px;
+  }
 `;
 const Parameter = styled.div`
   margin: 0 5px;

@@ -7,7 +7,7 @@ import { Coordinates, Satellite } from './satellitesSlice';
 export const initialState = {
   user: { coordinates: [56.185138378217, 36.97672197631281] } as User,
   userParameters: {
-    selectedSatellite: { name: 'AMER', coordinates: [0, -98] },
+    selectedSatellite: { name: 'EMEA', coordinates: [0, 25] },
     sightingImpossibly: false,
     sightingParameters: {
       elevationAngle: { name: 'Угол места', data: 0 },
@@ -17,6 +17,7 @@ export const initialState = {
     },
     isFetching: false,
   },
+  initialization: false,
 };
 
 export type initialStateType = typeof initialState;
@@ -54,6 +55,9 @@ const userSlice = createSlice({
     setIsFetching: (state, action: PayloadAction<boolean>) => {
       state.userParameters.isFetching = action.payload;
     },
+    setInitialization: (state) => {
+      state.initialization = true;
+    },
   },
 });
 
@@ -66,6 +70,7 @@ export const {
   setMagneticAzimuth,
   setSightingImpossibly,
   setIsFetching,
+  setInitialization,
 } = userSlice.actions;
 
 export default userSlice;
@@ -158,14 +163,16 @@ export const setSightingParametersThunk =
       dispatch(setSightingImpossibly(false));
 
       await dispatch(setDeclinationThunk());
-      await dispatch(setMagneticAzimuthThunk());
       dispatch(setElevationAngleThunk());
       dispatch(setAzimuthThunk());
+      await dispatch(setMagneticAzimuthThunk());
 
       dispatch(setIsFetching(false));
     } else {
       dispatch(setSightingImpossibly(true));
     }
+    const count = getState().satellites.areasCheckCount;
+    if (count > satellites.length - 1) dispatch(setInitialization());
   };
 export interface User {
   coordinates: Coordinates;

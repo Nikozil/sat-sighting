@@ -17,3 +17,6 @@ export const getSightingImpossibly = (state: AppStateType) =>
 
 export const getIsFetching = (state: AppStateType) =>
   state.user.userParameters.isFetching;
+
+export const getInitialization = (state: AppStateType) =>
+  state.user.initialization;
