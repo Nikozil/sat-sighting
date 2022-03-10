@@ -16,6 +16,7 @@ const UserPlacemark: React.FC<PropTypes> = ({
         iconColor: '#20232a',
         cursor: 'pointer',
         draggable: true,
+        zIndex: 10,
       }}
       modules={['geoObject.addon.balloon']}
       onDrag={onDrag}

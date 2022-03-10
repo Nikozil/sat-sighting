@@ -16,7 +16,9 @@ function App() {
         <SatellitesMenu />
         <SightingParameters />
       </Wrapper>
-      <MapComponent />
+      <MapWrapper>
+        <MapComponent />
+      </MapWrapper>
     </Application>
   );
 }
@@ -30,6 +32,10 @@ const Wrapper = styled.section`
   align-items: center;
   justify-content: center;
   background: linear-gradient(#3869a0, #92b7e1);
+`;
+const MapWrapper = styled.section`
+  height: calc(100vh - 250px);
+  background-color: #92b7e1;
 `;
 const Application = styled.div`
   text-align: center;
