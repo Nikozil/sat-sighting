@@ -52,7 +52,7 @@ const MapComponent = () => {
         style={{
           minWidth: '320px',
           width: '100vw',
-          height: 'calc(100vh - 250px)',
+          height: '100%',
         }}
         defaultState={{
           center: [55.751574, 37.573856],
@@ -60,7 +60,7 @@ const MapComponent = () => {
         }}
         options={{
           suppressMapOpenBlock: true,
-          minZoom: 2,
+          minZoom: 3,
           //@ts-ignore
 
           // restrictMapArea: [

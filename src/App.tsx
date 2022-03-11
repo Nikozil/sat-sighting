@@ -31,11 +31,21 @@ const Wrapper = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(#3869a0, #92b7e1);
+  // background: linear-gradient(#3869a0, #92b7e1);
+  background: #fff;
+  @media (max-width: 768px) {
+    height: 160px;
+  }
 `;
 const MapWrapper = styled.section`
-  height: calc(100vh - 250px);
-  background-color: #92b7e1;
+  // height: calc(100vh - 250px);
+  height: calc(100vh - 212px);
+  // background-color: #92b7e1;
+  background: #fff;
+
+  @media (max-width: 768px) {
+    height: calc(100vh - 192px);
+  }
 `;
 const Application = styled.div`
   text-align: center;

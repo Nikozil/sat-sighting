@@ -28,19 +28,24 @@ const Header = () => {
 export default Header;
 
 const Title = styled.h1`
-  font-size: 1.5em;
+  font-size: 1.3em;
   text-align: center;
   color: #fff;
-  @media (max-width: 768px) {
-    font-size: 1.2em;
+  @media (max-width: 930px) {
+    font-size: 1.1em;
   }
+  @media (max-width: 768px) {
+    font-size: 0.8em;
+  }
+
   @media (max-width: 576px) {
-    font-size: 1em;
+    font-size: 0.7em;
   }
 `;
 
 const Wrapper = styled.section`
-  height: 70px;
+  // height: 70px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
