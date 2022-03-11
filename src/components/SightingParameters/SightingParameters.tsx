@@ -50,7 +50,9 @@ const SightingParameters = () => {
                 {isFetching ? (
                   <Spinner />
                 ) : (
-                  `${selectedSatellite.coordinates[0]}, ${selectedSatellite.coordinates[1]}`
+                  ` ${selectedSatellite.coordinates[1]}${
+                    selectedSatellite.coordinates[1] > 0 ? 'E' : 'W'
+                  }`
                 )}
               </ParameterData>
             </Parameter>
