@@ -1,18 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-
-// const str = `75,21°N 141,67°E
-// 56,21°N -151,43°E
-// 0°N -139,36°W
-// -56,62°S -151,48°W
-// -75,81°S 142,21°E
-// -56,71°S 78,38°E
-// 0°N 66,31°E
-// 56,51°N 78,58°E`;
+import {
+  FIRST_BACKGROUND_COLOR,
+  HEADER_HEIGHT,
+  MAIN_TEXT_COLOR,
+} from '../../config/cssConfig';
 
 const Header = () => {
-  // console.log(formatCoordinates(str));
-
   return (
     <header>
       <Wrapper>
@@ -30,7 +24,8 @@ export default Header;
 const Title = styled.h1`
   font-size: 1.3em;
   text-align: center;
-  color: #fff;
+  color: ${MAIN_TEXT_COLOR};
+
   @media (max-width: 930px) {
     font-size: 1.1em;
   }
@@ -44,10 +39,9 @@ const Title = styled.h1`
 `;
 
 const Wrapper = styled.section`
-  // height: 70px;
-  height: 32px;
+  height: ${HEADER_HEIGHT};
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #3869a0;
+  background: ${FIRST_BACKGROUND_COLOR};
 `;

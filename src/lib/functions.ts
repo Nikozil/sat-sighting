@@ -1,4 +1,6 @@
-export const formatCoordinates = (string: string) => {
+import { Coordinates } from '../Redux/modules/satellitesSlice';
+
+export const formatCoordinatesArray = (string: string) => {
   return string
     .replace(/,/g, '.')
     .split(/°[EW]\n?/)
@@ -42,3 +44,11 @@ export const calcAzimuth = (
 
   return +(azi * 57.29578).toFixed(1);
 };
+
+export const isCoordinate = (string: string) =>
+  /^-?[0-9]*\.?[0-9]*$/.test(string);
+
+export const formatCoordinates = (coordinates: Coordinates): Coordinates => [
+  +coordinates[0].toFixed(2),
+  +coordinates[1].toFixed(2),
+];

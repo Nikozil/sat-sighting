@@ -70,9 +70,9 @@ export default SightingParameters;
 const Wrapper = styled.section`
   display: flex;
   margin: 5px 0;
-  height: 100px;
+  height: 40px;
   @media (max-width: 768px) {
-    height: 60px;
+    height: 70px;
   }
 `;
 const Parameter = styled.div`
@@ -93,10 +93,10 @@ const Parameter = styled.div`
 `;
 const Alert = styled.div`
   color: #242424;
-  font-size: 1.9em;
+  font-size: 1.2em;
   font-weight: 900;
   @media (max-width: 768px) {
-    font-size: 1.3em;
+    font-size: 0.9em;
   }
 `;
 const ParameterData = styled.div`

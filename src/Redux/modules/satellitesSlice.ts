@@ -59,7 +59,8 @@ export const initialState = {
       ],
 
       areaFillColor: '#e3f4fa',
-      areaStrokeColor: '#6af4fa',
+      // areaStrokeColor: '#6af4fa',
+      areaStrokeColor: '#055F61',
 
       // areaFillColor: '#17273A',
       // areaStrokeColor: '#26486E',
@@ -109,14 +110,16 @@ export const initialState = {
         [22.0, -38.0],
         [30.0, -40.0],
         [32.0, -40.0],
-        [41.0, -41.0],
+        [38.0, -41.0],
         [45.0, -44.0],
         [55.0, -42.0],
         [58.0, -42.0],
-        [66.0, -34.0],
+        [66.0, -29.5],
         [67.0, -26.0],
         [75.0, -7.0],
         [77.9, 10.0],
+        [77.97, 10.64],
+        [77.99, 11.27],
       ],
 
       areaFillColor: '#e3f4fa',

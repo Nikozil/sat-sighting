@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Map, YMaps, YMapsApi } from 'react-yandex-maps';
+import { Map, YMaps, YMapsApi, ZoomControl } from 'react-yandex-maps';
 import { Coordinates } from '../../Redux/modules/satellitesSlice';
 import { setUserCoordinatesThunk } from '../../Redux/modules/userSlice';
 import { getSatellites } from '../../Redux/selectors/satellitesSelectors';
@@ -61,6 +61,7 @@ const MapComponent = () => {
         options={{
           suppressMapOpenBlock: true,
           minZoom: 3,
+
           //@ts-ignore
 
           // restrictMapArea: [
@@ -88,6 +89,7 @@ const MapComponent = () => {
             onClick={onClickHandler}
           />
         ))}
+        <ZoomControl options={{ float: 'right' }} />
       </Map>
     </YMaps>
   );
