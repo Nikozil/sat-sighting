@@ -8,7 +8,7 @@ export const instance = axios.create({
 export const getDeclination = async (coordinates: Coordinates) => {
   const latHemisphere = coordinates[0] > 0 ? 'N' : 'S';
   const lonHemisphere = coordinates[1] > 0 ? 'E' : 'W';
-
+  const key = process.env.REACT_APP_KEY;
   const latitude = Math.abs(coordinates[0]);
   const longitude = Math.abs(coordinates[1]);
 
@@ -17,7 +17,7 @@ export const getDeclination = async (coordinates: Coordinates) => {
   const day = new Date().getDate();
 
   let response = await instance.get(
-    `/calculateDeclination?browserRequest=true&magneticComponent=d&lat1=${latitude}&lat1Hemisphere=${latHemisphere}&lon1=${longitude}&lon1Hemisphere=${lonHemisphere}&model=WMM&startYear=${year}&startMonth=${month}&startDay=${day}&resultFormat=json`
+    `/calculateDeclination?browserRequest=true&magneticComponent=d&key=${key}&lat1=${latitude}&lat1Hemisphere=${latHemisphere}&lon1=${longitude}&lon1Hemisphere=${lonHemisphere}&model=WMM&startYear=${year}&startMonth=${month}&startDay=${day}&resultFormat=json`
   );
 
   return response.data.result[0].declination as number;
