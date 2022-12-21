@@ -125,11 +125,16 @@ export const setAzimuthThunk = (): AppThunk => (dispatch, getState) => {
 export const setDeclinationThunk =
   (): AppThunk => async (dispatch, getState) => {
     const userCoordinates = getState().user.user.coordinates;
+    try {
+      const data = await getDeclination(userCoordinates);
+      const declination = +data.toFixed(1);
 
-    const data = await getDeclination(userCoordinates);
-    const declination = +data.toFixed(1);
-
-    dispatch(setDeclination(declination));
+      dispatch(setDeclination(declination));
+    } catch (error) {
+      const declination = 0;
+      dispatch(setDeclination(declination));
+      console.log(error);
+    }
   };
 
 export const setMagneticAzimuthThunk =
