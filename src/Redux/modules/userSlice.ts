@@ -7,7 +7,7 @@ import { Coordinates, Satellite } from './satellitesSlice';
 export const initialState = {
   user: { coordinates: [56.185138378217, 36.97672197631281] } as User,
   userParameters: {
-    selectedSatellite: { name: 'EMEA', coordinates: [0, 25] },
+    selectedSatellite: { name: 'MEAS', coordinates: [0, 64] },
     sightingImpossibly: false,
     sightingParameters: {
       elevationAngle: { name: 'Угол места', data: 0 },

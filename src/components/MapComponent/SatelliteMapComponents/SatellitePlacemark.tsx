@@ -29,6 +29,7 @@ const SatellitePlacemark: React.FC<PropTypes> = ({ coordinates, name }) => {
         balloonCloseButton: false,
         hideIconOnBalloonOpen: false,
         balloonOffset: [0, -12],
+        zIndex: 10,
       }}
       modules={['geoObject.addon.balloon']}
     />

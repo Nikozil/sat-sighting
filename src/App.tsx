@@ -6,6 +6,14 @@ import MapComponent from './components/MapComponent/MapComponent';
 import SatellitesMenu from './components/SatellitesMenu/SatellitesMenu';
 import SightingParameters from './components/SightingParameters/SightingParameters';
 import UserMenu from './components/UserMenu/UserMenu';
+import {
+  CONTENT_HEIGHT,
+  CONTENT_HEIGHT_MOBILE,
+  FIRST_BACKGROUND_COLOR,
+  HEADER_HEIGHT,
+  LAST_BACKGROUND_COLOR,
+  MIDDLE_BACKGROUND_COLOR,
+} from './config/cssConfig';
 
 function App() {
   return (
@@ -16,7 +24,9 @@ function App() {
         <SatellitesMenu />
         <SightingParameters />
       </Wrapper>
-      <MapComponent />
+      <MapWrapper>
+        <MapComponent />
+      </MapWrapper>
     </Application>
   );
 }
@@ -24,12 +34,31 @@ function App() {
 export default App;
 
 const Wrapper = styled.section`
-  height: 180px;
+  height: ${CONTENT_HEIGHT};
+  padding-bottom: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(#3869a0, #92b7e1);
+
+  background: linear-gradient(
+    ${FIRST_BACKGROUND_COLOR},
+    ${MIDDLE_BACKGROUND_COLOR},
+    ${LAST_BACKGROUND_COLOR}
+  );
+
+  @media (max-width: 768px) {
+    height: ${CONTENT_HEIGHT_MOBILE};
+    padding-bottom: none;
+  }
+`;
+const MapWrapper = styled.section`
+  height: calc(100vh - ${HEADER_HEIGHT} - ${CONTENT_HEIGHT});
+  background-color: ${LAST_BACKGROUND_COLOR};
+
+  @media (max-width: 768px) {
+    height: calc(100vh - ${HEADER_HEIGHT} - ${CONTENT_HEIGHT_MOBILE});
+  }
 `;
 const Application = styled.div`
   text-align: center;

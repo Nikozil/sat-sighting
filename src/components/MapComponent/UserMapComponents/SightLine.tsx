@@ -18,6 +18,7 @@ const SightLine: React.FC<PropTypes> = ({
         geodesic: true,
         strokeWidth: 5,
         strokeColor: '#25006E',
+        zIndex: 9,
         // strokeColor: '#61dafb',
       }}
     />
