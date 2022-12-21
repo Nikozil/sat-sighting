@@ -21,7 +21,7 @@ const SatellitesMenu = () => {
       {satellites.map((satellite) => (
         <Button
           key={satellite.name}
-          theme={{ background: `${satellite.areaFillColor}` }}
+          theme={{ background: `${satellite.areaStrokeColor}` }}
           onClick={clickHandler}
           isSelected={satellite.name === userSelectedName}>
           {satellite.name}

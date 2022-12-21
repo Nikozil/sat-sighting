@@ -5,7 +5,10 @@ import {
   Coordinates,
   setIsInPolygoneThunk,
 } from '../../../Redux/modules/satellitesSlice';
-import { getCoordinates } from '../../../Redux/selectors/userSelectors';
+import {
+  getCoordinates,
+  getSelectedSatelliteName,
+} from '../../../Redux/selectors/userSelectors';
 
 const SatellitePolygon: React.FC<PropTypes> = ({
   name,
@@ -17,6 +20,9 @@ const SatellitePolygon: React.FC<PropTypes> = ({
   const dispatch = useDispatch();
 
   const userCoordinates = useSelector(getCoordinates);
+  const selectedSatellite = useSelector(getSelectedSatelliteName);
+
+  const isSelected = selectedSatellite === name;
 
   const polyRef = useCallback(
     (node) => {
@@ -39,9 +45,12 @@ const SatellitePolygon: React.FC<PropTypes> = ({
       options={{
         fillColor: areaFillColor,
         strokeColor: areaStrokeColor,
-        opacity: 0.3,
-        strokeWidth: 6,
+        // opacity: isSelected ? 0.3 : 0.1,
+        fillOpacity: isSelected ? 0.5 : 0.1,
+        strokeOpacity: 1,
+        strokeWidth: 3,
         strokeStyle: 'solid',
+        zIndex: isSelected ? 1 : 0,
       }}
       onClick={onClick}
     />

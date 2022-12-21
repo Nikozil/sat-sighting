@@ -8,6 +8,7 @@ import {
   getCoordinates,
   getInitialization,
   getIsFetching,
+  getSelectedSatellite,
   getSightingImpossibly,
   getSightingParameters,
 } from '../../Redux/selectors/userSelectors';
@@ -18,6 +19,7 @@ const SightingParameters = () => {
   const coordinates = useSelector(getCoordinates);
   const sightingParameters = useSelector(getSightingParameters);
   const sightingImpossibly = useSelector(getSightingImpossibly);
+  const selectedSatellite = useSelector(getSelectedSatellite);
   const isFetching = useSelector(getIsFetching);
   const initialization = useSelector(getInitialization);
 
@@ -31,16 +33,30 @@ const SightingParameters = () => {
     <Wrapper>
       {initialization ? (
         sightingImpossibly ? (
-          <Alert>Наведение невозможно</Alert>
+          <Alert>Терминал вне зоны покрытия выбранного спутника</Alert>
         ) : (
-          Object.entries(sightingParameters).map(([key, parameter]) => (
-            <Parameter key={parameter.name}>
-              <div>{parameter.name}</div>
+          <>
+            {Object.entries(sightingParameters).map(([key, parameter]) => (
+              <Parameter key={parameter.name}>
+                <div>{parameter.name}</div>
+                <ParameterData>
+                  {isFetching ? <Spinner /> : `${parameter.data} °`}
+                </ParameterData>
+              </Parameter>
+            ))}
+            <Parameter key={selectedSatellite.name}>
+              <div>Координаты спутника</div>
               <ParameterData>
-                {isFetching ? <Spinner /> : `${parameter.data} °`}
+                {isFetching ? (
+                  <Spinner />
+                ) : (
+                  ` ${selectedSatellite.coordinates[1]}${
+                    selectedSatellite.coordinates[1] > 0 ? 'E' : 'W'
+                  }`
+                )}
               </ParameterData>
             </Parameter>
-          ))
+          </>
         )
       ) : (
         <Spinner size={50} />
@@ -54,9 +70,9 @@ export default SightingParameters;
 const Wrapper = styled.section`
   display: flex;
   margin: 5px 0;
-  height: 100px;
+  height: 40px;
   @media (max-width: 768px) {
-    height: 60px;
+    height: 70px;
   }
 `;
 const Parameter = styled.div`
@@ -65,19 +81,22 @@ const Parameter = styled.div`
   text-align: center;
   font-size: 1.2em;
   font-weight: 900;
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     font-size: 1em;
   }
+  @media (max-width: 768px) {
+    font-size: 0.8em;
+  }
   @media (max-width: 576px) {
-    font-size: 0.9em;
+    font-size: 0.7em;
   }
 `;
 const Alert = styled.div`
   color: #242424;
-  font-size: 1.9em;
+  font-size: 1.2em;
   font-weight: 900;
   @media (max-width: 768px) {
-    font-size: 1.8em;
+    font-size: 0.9em;
   }
 `;
 const ParameterData = styled.div`
