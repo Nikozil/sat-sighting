@@ -70,7 +70,7 @@ export default SightingParameters;
 const Wrapper = styled.section`
   display: flex;
   margin: 5px 0;
-  height: 40px;
+  height: 3em;
   @media (max-width: 768px) {
     height: 70px;
   }

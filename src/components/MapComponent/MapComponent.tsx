@@ -56,7 +56,7 @@ const MapComponent = () => {
         }}
         defaultState={{
           center: [55.751574, 37.573856],
-          zoom: 3,
+          zoom: 6,
         }}
         options={{
           suppressMapOpenBlock: true,
